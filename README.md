@@ -14,7 +14,7 @@ The project was launched in July 2023 and is still in development.
 - [Live Demo](https://github.com/egor-denisov/web-tg-cloud#live-demo)
 - [Final product](https://github.com/egor-denisov/web-tg-cloud#final-product)
 - [Running the project](https://github.com/egor-denisov/web-tg-cloud#running-the-project)
-- [About the game](https://github.com/egor-denisov/web-tg-cloud#about-the-app)
+- [About the app](https://github.com/egor-denisov/web-tg-cloud#about-the-app)
 - [Dependencies](https://github.com/egor-denisov/web-tg-cloud#dependencies)
 - [Credits](https://github.com/egor-denisov/web-tg-cloud#credits)
 
