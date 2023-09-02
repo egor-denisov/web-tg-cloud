@@ -1,46 +1,51 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cloud storage based on Telegram
 
-## Available Scripts
+App build frontend server to cloud storage. The user can work with both the telegram bot and the web version
 
-In the project directory, you can run:
+Code is written in Typescript (React.js).
 
-### `npm start`
+## Timelapse
+This is frontend client for my [project](https://github.com/egor-denisov/golang-tg-cloud) on Golang.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The project was launched in July 2023 and is still in development.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Content
+- [Live Demo](https://github.com/egor-denisov/web-tg-cloud#live-demo)
+- [Final product](https://github.com/egor-denisov/web-tg-cloud#final-product)
+- [Running the project](https://github.com/egor-denisov/web-tg-cloud#running-the-project)
+- [About the game](https://github.com/egor-denisov/web-tg-cloud#about-the-app)
+- [Dependencies](https://github.com/egor-denisov/web-tg-cloud#dependencies)
+- [Credits](https://github.com/egor-denisov/web-tg-cloud#credits)
 
-### `npm test`
+## Live Demo
+Live demo is currently unavailable.
+## Final product
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+At the moment, the project is under development. 
 
-### `npm run build`
+## Running the project
+To run the project go to the downloaded directory. Then run the commands:
+```
+# Run client-side on 3000 port
+# Go to folder client
+cd client
+# Install missing packages
+npm install
+# Start index.js
+npm start
+```
+Аfter executing these commands, you can go to http://localhost:3000/
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## About the app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This application is designed to provide a graphical interface to a cloud storage project. A minimal cloud storage interface is implemented and linked to an already written backend.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Dependencies
+- React v18.2.0
+- Redux v8.1.2
+- Typescript v4.9.5
+- Sass
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Credits
+Icons were taken from iconer.app
