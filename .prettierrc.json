@@ -1,0 +1,8 @@
+{
+    "tabWidth": 4,
+    "singleQuote": true,
+    "tsxsingleQuote": true,
+    "semi": false,
+    "trailingComma": "none",
+    "useTabs": true
+}
