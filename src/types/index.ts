@@ -23,3 +23,11 @@ export type ContentType = {
 	files: FileType[]
 	directories: DirectoryType[]
 }
+export type UserDataType = {
+	id: number
+	username: string
+	userId: number
+	firstname: string
+	lastname: string
+	currentDirectory: number
+}

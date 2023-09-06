@@ -3,14 +3,14 @@ import axios from 'axios'
 import { ContentAction, ContentActionTypes } from '../../types/contentTypes'
 import { ContentType, DirectoryType, FileType } from '../../types'
 
-export const fetchContent = () => {
+export const fetchContent = (user_id: number, directory_id: number) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		try {
 			dispatch({ type: ContentActionTypes.FETCH_CONTENT })
 			const response = await axios.get(
 				'http://localhost:8080/available',
 				{
-					params: { user_id: 694916310, directory_id: 1 }
+					params: { user_id: user_id, directory_id: directory_id }
 				}
 			)
 			let res: ContentType = { files: [], directories: [] }
@@ -54,5 +54,32 @@ export const fetchContent = () => {
 				payload: 'Error fetching content' + e
 			})
 		}
+	}
+}
+
+export const createDirectory = (directory: DirectoryType) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get('http://localhost:8080/createDirectory', {
+				params: {
+					directory: JSON.stringify({
+						...directory,
+						user_id: directory.userId,
+						parent_id: directory.parentId
+					})
+				}
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: 'Directory is successfully created'
+				})
+			})
+			.catch(({ response }) => {
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: response.data
+				})
+			})
 	}
 }

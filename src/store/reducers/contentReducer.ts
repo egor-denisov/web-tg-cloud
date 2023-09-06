@@ -7,7 +7,8 @@ import {
 const initialState: ContentState = {
 	content: { files: [], directories: [] },
 	loading: false,
-	error: null
+	error: null,
+	notification: null
 }
 
 export const ContentReducer = (
@@ -21,6 +22,10 @@ export const ContentReducer = (
 			return { ...state, loading: false, content: action.payload }
 		case ContentActionTypes.FETCH_CONTENT_ERROR:
 			return { ...state, loading: false, error: action.payload }
+		case ContentActionTypes.SET_ERROR:
+			return { ...state, error: action.payload }
+		case ContentActionTypes.SET_NOTIFICATION:
+			return { ...state, notification: action.payload }
 		default:
 			return state
 	}
