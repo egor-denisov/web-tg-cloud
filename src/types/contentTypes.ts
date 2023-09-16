@@ -27,11 +27,11 @@ interface FetchContentErrorAction {
 }
 interface SetErrorAction {
 	type: ContentActionTypes.SET_ERROR
-	payload: string
+	payload: null | string
 }
 interface SetNotificationAction {
 	type: ContentActionTypes.SET_NOTIFICATION
-	payload: string
+	payload: null | string
 }
 
 export type ContentAction =

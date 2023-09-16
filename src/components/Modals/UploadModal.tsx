@@ -22,7 +22,7 @@ const UploadDrawer: FC<props> = ({ show, onHide }) => {
 						action="http://localhost:8080/upload"
 						data={{
 							user_id: data.userId,
-							directory_id: data.currentDirectory
+							directory_id: data.currentDirectoryId
 						}}
 						multiple
 						draggable

@@ -2,8 +2,9 @@ import { Dispatch } from 'redux'
 import axios from 'axios'
 import { ContentAction, ContentActionTypes } from '../../types/contentTypes'
 import { ContentType, DirectoryType, FileType } from '../../types'
+import { iso2date } from '../../utils/helper'
 
-export const fetchContent = (user_id: number, directory_id: number) => {
+export const fetchContent = (user_id: number, directory_id = -1) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		try {
 			dispatch({ type: ContentActionTypes.FETCH_CONTENT })
@@ -22,7 +23,8 @@ export const fetchContent = (user_id: number, directory_id: number) => {
 						fileId: f['file_id'],
 						fileUniqueId: f['file_unique_id'],
 						fileSize: f['file_size'],
-						isImage: f['is_image'],
+						type: f['file_type'],
+						created: iso2date(f['created']),
 						thumbnailFileId: f['thumbnail_file_id'],
 						thumbnailSource:
 							'http://localhost:8080/thumbnail?id=' + f['id'],
@@ -40,7 +42,9 @@ export const fetchContent = (user_id: number, directory_id: number) => {
 						userId: d['user_id'],
 						files: d['files'],
 						directories: d['directories'],
-						size: d['size']
+						size: d['size'],
+						path: d['path'],
+						created: iso2date(d['created'])
 					}
 				})
 			}
@@ -81,5 +85,48 @@ export const createDirectory = (directory: DirectoryType) => {
 					payload: response.data
 				})
 			})
+	}
+}
+
+export const editItem = (id: number, newName: string, type: string) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get('http://localhost:8080/edit', {
+				params: {
+					id: id,
+					name: newName,
+					type: type
+				}
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: 'Name is successfully edited'
+				})
+			})
+			.catch(({ response }) => {
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: response.data
+				})
+			})
+	}
+}
+
+export const clearError = () => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		dispatch({
+			type: ContentActionTypes.SET_ERROR,
+			payload: null
+		})
+	}
+}
+
+export const clearNotification = () => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		dispatch({
+			type: ContentActionTypes.SET_NOTIFICATION,
+			payload: null
+		})
 	}
 }

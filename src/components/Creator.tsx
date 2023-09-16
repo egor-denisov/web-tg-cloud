@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import PlusSVG from '../../svg/Plus'
-import UploadModal from './UploadModal'
-import CreateModal from './CreateModal'
-import { Button } from 'rsuite'
+import UploadModal from './Modals/UploadModal'
+import CreateModal from './Modals/CreateModal'
+import { Dropdown } from 'rsuite'
 const Creator = () => {
-	const [active, setActive] = useState(false)
 	const [uploadActive, setUploadActive] = useState(false)
 	const [createActive, setCreateActive] = useState(false)
 	return (
-		<div className="creator">
+		<>
 			<UploadModal
 				show={uploadActive}
 				onHide={() => setUploadActive(false)}
@@ -17,26 +15,28 @@ const Creator = () => {
 				show={createActive}
 				onHide={() => setCreateActive(false)}
 			/>
-			{active && (
-				<div className="menu">
-					<div
+			<div className="creator">
+				<Dropdown
+					title="+"
+					placement="topEnd"
+					appearance="primary"
+					noCaret
+				>
+					<Dropdown.Item
 						className="option folder"
 						onClick={() => setCreateActive(true)}
 					>
-						<Button appearance="subtle">Create new folder</Button>
-					</div>
-					<div
+						Create new folder
+					</Dropdown.Item>
+					<Dropdown.Item
 						className="option file"
 						onClick={() => setUploadActive(true)}
 					>
-						<Button appearance="subtle">Upload file</Button>
-					</div>
-				</div>
-			)}
-			<div className={['btn', active && 'active'].join(' ')}>
-				<PlusSVG onClick={() => setActive(!active)} />
+						Upload file
+					</Dropdown.Item>
+				</Dropdown>
 			</div>
-		</div>
+		</>
 	)
 }
 

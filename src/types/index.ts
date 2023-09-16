@@ -4,6 +4,8 @@ export type FileType = {
 	fileId: string
 	fileUniqueId: string
 	fileSize: number
+	type: string
+	created: string
 	thumbnailFileId: string
 	thumbnailSource: string
 	fileSource: string
@@ -14,9 +16,11 @@ export type DirectoryType = {
 	parentId: number
 	name: string
 	userId: number
-	files: number[]
-	directories: number[]
-	size: number
+	files?: number[]
+	directories?: number[]
+	size?: number
+	path?: string
+	created?: string
 }
 
 export type ContentType = {
@@ -29,5 +33,5 @@ export type UserDataType = {
 	userId: number
 	firstname: string
 	lastname: string
-	currentDirectory: number
+	currentDirectoryId: number
 }

@@ -1,3 +1,4 @@
+import { DirectoryType } from '../../types'
 import { UserAction, UserActionTypes, UserState } from '../../types/userTypes'
 
 const initialState: UserState = {
@@ -7,8 +8,9 @@ const initialState: UserState = {
 		userId: -1,
 		firstname: '',
 		lastname: '',
-		currentDirectory: -1
+		currentDirectoryId: -1
 	},
+	currentDirectory: <DirectoryType>{},
 	authorized: false,
 	error: null
 }
@@ -29,7 +31,8 @@ export const UserReducer = (
 		case UserActionTypes.CHANGE_DIRECTORY:
 			return {
 				...state,
-				data: { ...state.data, currentDirectory: action.payload }
+				data: { ...state.data, currentDirectoryId: action.payload.id },
+				currentDirectory: action.payload
 			}
 		case UserActionTypes.SET_ERROR:
 			return { ...state, error: action.payload }

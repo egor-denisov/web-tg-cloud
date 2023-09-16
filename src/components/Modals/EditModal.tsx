@@ -1,47 +1,41 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, memo } from 'react'
 import { Button, Container, Drawer, Input } from 'rsuite'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { DirectoryType } from '../../types'
 import { useActions } from '../../hooks/useActions'
+import { DirectoryType, FileType } from '../../types'
 
 type props = {
 	show: boolean
+	item: FileType | DirectoryType
+	type: 'file' | 'directory'
 	onHide: (event: React.SyntheticEvent) => void
 }
 
-const CreateModal: FC<props> = ({ show, onHide }) => {
-	const { data } = useTypedSelector((state) => state.user)
-	const { createDirectory } = useActions()
-	const [name, setName] = useState('')
-	const create = () => {
-		const d: DirectoryType = {
-			id: -1,
-			parentId: data.currentDirectory,
-			name: name,
-			userId: data.userId,
-			files: [],
-			directories: [],
-			size: 0
+const EditModal: FC<props> = ({ show, item, type, onHide }) => {
+	const [name, setName] = useState(item.name)
+	const { editItem } = useActions()
+	const edit = () => {
+		if (name !== item.name) {
+			editItem(item.id, name, type)
 		}
-		createDirectory(d)
 	}
 	return (
 		<div className="modal">
 			<Drawer open={show} onClose={onHide} size="md" placement="bottom">
 				<Drawer.Header>
-					<Drawer.Title>Create new folder</Drawer.Title>
+					<Drawer.Title>Edit folder</Drawer.Title>
 				</Drawer.Header>
 				<Drawer.Body>
-					<p>Write name:</p>
+					<p>Write new name:</p>
 					<Input
-						placeholder="Folder name"
+						placeholder="New name"
 						style={{ margin: '20px 0px' }}
 						value={name}
 						onChange={(e) => setName(e)}
 						onPressEnter={(e) => {
-							create()
+							edit()
 							onHide(e)
 						}}
+						onFocus={(e) => e.target.select()}
 						autoFocus
 					/>
 					<Container
@@ -53,12 +47,12 @@ const CreateModal: FC<props> = ({ show, onHide }) => {
 					>
 						<Button
 							onClick={(e) => {
-								create()
+								edit()
 								onHide(e)
 							}}
 							appearance="primary"
 						>
-							Create
+							Edit
 						</Button>
 						<Button onClick={onHide} appearance="subtle">
 							Cancel
@@ -70,4 +64,4 @@ const CreateModal: FC<props> = ({ show, onHide }) => {
 	)
 }
 
-export default CreateModal
+export default EditModal

@@ -1,7 +1,8 @@
-import { UserDataType } from '.'
+import { DirectoryType, UserDataType } from '.'
 
 export type UserState = {
 	data: UserDataType
+	currentDirectory: DirectoryType
 	authorized: boolean
 	error: null | string
 }
@@ -31,11 +32,11 @@ interface LogoutUser {
 }
 interface ChangeDirectory {
 	type: UserActionTypes.CHANGE_DIRECTORY
-	payload: number
+	payload: DirectoryType
 }
 interface SetError {
 	type: UserActionTypes.SET_ERROR
-	payload: string
+	payload: null | string
 }
 
 export type UserAction =
