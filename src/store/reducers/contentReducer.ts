@@ -22,6 +22,32 @@ export const ContentReducer = (
 			return { ...state, loading: false, content: action.payload }
 		case ContentActionTypes.FETCH_CONTENT_ERROR:
 			return { ...state, loading: false, error: action.payload }
+		case ContentActionTypes.UPDATE_ITEM_NAME:
+			var newContent = { ...state.content }
+			if (action.payload.type === 'directory') {
+				newContent.directories.forEach((el, i) => {
+					if (el.id === action.payload.id) {
+						newContent.directories[i].name = action.payload.name
+						return { ...state, content: { ...newContent } }
+					}
+				})
+			} else {
+				newContent.files.forEach((el, i) => {
+					if (el.id === action.payload.id) {
+						newContent.files[i].name = action.payload.name
+						return { ...state, content: { ...newContent } }
+					}
+				})
+			}
+			return { ...state }
+		case ContentActionTypes.CREATE_DIRECTORY:
+			return {
+				...state,
+				content: {
+					...state.content,
+					directories: [...state.content.directories, action.payload]
+				}
+			}
 		case ContentActionTypes.SET_ERROR:
 			return { ...state, error: action.payload }
 		case ContentActionTypes.SET_NOTIFICATION:

@@ -73,6 +73,12 @@ export const createDirectory = (directory: DirectoryType) => {
 					})
 				}
 			})
+			.then((response) => {
+				dispatch({
+					type: ContentActionTypes.CREATE_DIRECTORY,
+					payload: { ...directory, id: response.data['id'] ?? -1 }
+				})
+			})
 			.then(() => {
 				dispatch({
 					type: ContentActionTypes.SET_NOTIFICATION,
@@ -100,14 +106,25 @@ export const editItem = (id: number, newName: string, type: string) => {
 			})
 			.then(() => {
 				dispatch({
+					type: ContentActionTypes.UPDATE_ITEM_NAME,
+					payload: {
+						id: id,
+						name: newName,
+						type: type
+					}
+				})
+			})
+			.then(() => {
+				dispatch({
 					type: ContentActionTypes.SET_NOTIFICATION,
 					payload: 'Name is successfully edited'
 				})
 			})
-			.catch(({ response }) => {
+			.catch((err) => {
+				console.log(err)
 				dispatch({
 					type: ContentActionTypes.SET_ERROR,
-					payload: response.data
+					payload: err.response?.data
 				})
 			})
 	}

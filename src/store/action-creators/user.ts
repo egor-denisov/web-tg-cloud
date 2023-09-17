@@ -6,28 +6,34 @@ import { iso2date } from '../../utils/helper'
 
 export const login = () => {
 	return async (dispatch: Dispatch<UserAction>) => {
-		try {
-			const response = await axios.get('http://localhost:8080/auth', {
+		await axios
+			.get('http://localhost:8080/auth', {
 				params: { user_id: 694916310 }
 			})
-
-			dispatch({
-				type: UserActionTypes.LOGIN_USER,
-				payload: <UserDataType>{
-					id: response.data['id'],
-					username: response.data['username'],
-					userId: response.data['user_id'],
-					firstname: response.data['firstname'],
-					lastname: response.data['lastname'],
-					currentDirectoryId: response.data['current_directory']
-				}
+			.then((response) => {
+				dispatch({
+					type: UserActionTypes.LOGIN_USER,
+					payload: <UserDataType>{
+						id: response.data['id'],
+						username: response.data['username'],
+						userId: response.data['user_id'],
+						firstname: response.data['firstname'],
+						lastname: response.data['lastname'],
+						currentDirectoryId: response.data['current_directory']
+					}
+				})
+				return response
 			})
-		} catch (e) {
-			dispatch({
-				type: UserActionTypes.SET_ERROR,
-				payload: 'Error with user login' + e
+			.then((response) => {
+				var f = changeDirectory(response.data['current_directory'])
+				f(dispatch)
 			})
-		}
+			.catch((e) => {
+				dispatch({
+					type: UserActionTypes.SET_ERROR,
+					payload: 'Error with user login' + e
+				})
+			})
 	}
 }
 export const changeDirectory = (id: number) => {

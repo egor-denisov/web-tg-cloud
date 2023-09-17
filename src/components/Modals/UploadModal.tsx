@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Drawer, Uploader } from 'rsuite'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useActions } from '../../hooks/useActions'
 
 type props = {
 	show: boolean

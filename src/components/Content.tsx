@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import File from './File'
 import { useTypedSelector } from '../hooks/useTypedSelector'
 import { useActions } from '../hooks/useActions'
 import Previewer from './Previewer'
-import Directory from './Directory'
 import Creator from './Creator'
 import { Loader, Notification, useToaster } from 'rsuite'
 import AboutModal from './Modals/AboutModal'
 import Path from './Path'
 import EditModal from './Modals/EditModal'
 import { DirectoryType, FileType } from '../types'
+import Items from './Items'
 
 type ItemType = FileType | DirectoryType
 
@@ -39,21 +38,15 @@ const Content = () => {
 	const { data, currentDirectory, authorized } = useTypedSelector(
 		(state) => state.user
 	)
-	const {
-		fetchContent,
-		login,
-		changeDirectory,
-		clearNotification,
-		clearError
-	} = useActions()
+	const { fetchContent, login, clearNotification, clearError } = useActions()
 
 	useEffect(() => {
 		login()
 	}, [])
 	useEffect(() => {
-		if (data.currentDirectoryId !== -1)
-			changeDirectory(data.currentDirectoryId)
-		fetchContent(data.userId, data.currentDirectoryId)
+		if (authorized) {
+			fetchContent(data.userId, data.currentDirectoryId)
+		}
 	}, [authorized, data.currentDirectoryId])
 
 	useEffect(() => {
@@ -130,46 +123,11 @@ const Content = () => {
 	return (
 		<div className="content">
 			<Path path={path} />
-			<div className="items">
-				{content.directories.map((directory, index) => {
-					return (
-						<Directory
-							directory={directory}
-							key={directory.id}
-							goAbout={() => setAboutData(index, 'directory')}
-							goRename={() =>
-								setEditModal({
-									visible: true,
-									item: directory,
-									type: 'directory'
-								})
-							}
-						/>
-					)
-				})}
-				{content.files.map((file, index) => {
-					return (
-						<File
-							file={file}
-							key={file.fileUniqueId}
-							goPreview={() =>
-								setPreviewer({
-									visible: true,
-									fileIndex: index
-								})
-							}
-							goAbout={() => setAboutData(index, 'file')}
-							goRename={() =>
-								setEditModal({
-									visible: true,
-									item: file,
-									type: 'file'
-								})
-							}
-						/>
-					)
-				})}
-			</div>
+			<Items
+				setAboutData={setAboutData}
+				setEditModal={setEditModal}
+				setPreviewer={setPreviewer}
+			/>
 			<AboutModal
 				show={aboutModal.visible}
 				onHide={() => setAboutModal({ ...aboutModal, visible: false })}

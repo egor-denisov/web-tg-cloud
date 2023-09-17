@@ -4,15 +4,23 @@ import PictureThumbnail from '../svg/PictureThumbnail'
 import { makeNameShorter } from '../utils/helper'
 import { Dropdown, Popover, Whisper } from 'rsuite'
 import { OverlayTriggerHandle } from 'rsuite/esm/Picker'
-
+import {
+	InfoRound,
+	Copy,
+	Edit,
+	Trash,
+	Detail,
+	FileDownload
+} from '@rsuite/icons/'
 type props = {
 	file: FileType
 	goPreview: Function
+	goSave: Function
 	goAbout: Function
 	goRename: Function
 }
 
-const File: FC<props> = ({ file, goPreview, goAbout, goRename }) => {
+const File: FC<props> = ({ file, goPreview, goSave, goAbout, goRename }) => {
 	const [imageSrc, setImageSrc] = useState('')
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	useEffect(() => {
@@ -22,19 +30,20 @@ const File: FC<props> = ({ file, goPreview, goAbout, goRename }) => {
 		}
 		img.src = file.thumbnailSource
 	}, [file.id])
-	function handleSelectMenu(
-		eventKey: string | undefined,
-		event: React.SyntheticEvent<Element, Event>
-	) {
+	const handleSelectMenu = (eventKey: string | undefined) => {
 		switch (Number(eventKey)) {
 			case 1:
 				goPreview()
 				break
 			case 2:
+				goSave()
+				break
+			case 3:
 				goRename()
 				break
 			case 6:
 				goAbout()
+				break
 		}
 		ref.current?.close()
 	}
@@ -45,15 +54,27 @@ const File: FC<props> = ({ file, goPreview, goAbout, goRename }) => {
 			ref={ref}
 			speaker={
 				<Popover full style={{ minWidth: '250px' }}>
-					<Dropdown.Menu onSelect={(k, e) => handleSelectMenu(k, e)}>
-						<Dropdown.Item eventKey={1}>Open</Dropdown.Item>
-						<Dropdown.Item eventKey={2}>Rename</Dropdown.Item>
+					<Dropdown.Menu onSelect={handleSelectMenu}>
+						<Dropdown.Item icon={<Detail />} eventKey={1}>
+							Open
+						</Dropdown.Item>
+						<Dropdown.Item icon={<FileDownload />} eventKey={2}>
+							Save
+						</Dropdown.Item>
 						<hr style={{ margin: '0px' }} />
-						<Dropdown.Item eventKey={4}>Copy</Dropdown.Item>
-						<Dropdown.Item eventKey={5}>Cut</Dropdown.Item>
-						<Dropdown.Item eventKey={3}>Delete</Dropdown.Item>
+						<Dropdown.Item icon={<Edit />} eventKey={3}>
+							Rename
+						</Dropdown.Item>
+						<Dropdown.Item icon={<Copy />} eventKey={4}>
+							Copy
+						</Dropdown.Item>
+						<Dropdown.Item icon={<Trash />} eventKey={5}>
+							Delete
+						</Dropdown.Item>
 						<hr style={{ margin: '0px' }} />
-						<Dropdown.Item eventKey={6}>About</Dropdown.Item>
+						<Dropdown.Item icon={<InfoRound />} eventKey={6}>
+							About
+						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Popover>
 			}

@@ -1,4 +1,4 @@
-import React, { FC, useState, memo } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { Button, Container, Drawer, Input } from 'rsuite'
 import { useActions } from '../../hooks/useActions'
 import { DirectoryType, FileType } from '../../types'
@@ -11,13 +11,16 @@ type props = {
 }
 
 const EditModal: FC<props> = ({ show, item, type, onHide }) => {
-	const [name, setName] = useState(item.name)
+	const [name, setName] = useState('')
 	const { editItem } = useActions()
 	const edit = () => {
 		if (name !== item.name) {
 			editItem(item.id, name, type)
 		}
 	}
+	useEffect(() => {
+		if (item?.name) setName(item?.name)
+	}, [item.name])
 	return (
 		<div className="modal">
 			<Drawer open={show} onClose={onHide} size="md" placement="bottom">
@@ -30,7 +33,7 @@ const EditModal: FC<props> = ({ show, item, type, onHide }) => {
 						placeholder="New name"
 						style={{ margin: '20px 0px' }}
 						value={name}
-						onChange={(e) => setName(e)}
+						onChange={setName}
 						onPressEnter={(e) => {
 							edit()
 							onHide(e)
