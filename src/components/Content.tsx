@@ -9,6 +9,7 @@ import Path from './Path'
 import EditModal from './Modals/EditModal'
 import { DirectoryType, FileType } from '../types'
 import Items from './Items'
+import DeleteModal from './Modals/DeleteModal'
 
 type ItemType = FileType | DirectoryType
 
@@ -30,6 +31,17 @@ const Content = () => {
 	}>({
 		visible: false,
 		item: {} as FileType,
+		type: 'file'
+	})
+	const [deleteModal, setDeleteModal] = useState<{
+		visible: boolean
+		id: number
+		name: string
+		type: 'file' | 'directory'
+	}>({
+		visible: false,
+		id: -1,
+		name: '',
 		type: 'file'
 	})
 	const { content, error, loading, notification } = useTypedSelector(
@@ -127,6 +139,7 @@ const Content = () => {
 				setAboutData={setAboutData}
 				setEditModal={setEditModal}
 				setPreviewer={setPreviewer}
+				setDeleteModal={setDeleteModal}
 			/>
 			<AboutModal
 				show={aboutModal.visible}
@@ -138,6 +151,15 @@ const Content = () => {
 				onHide={() => setEditModal({ ...editModal, visible: false })}
 				item={editModal.item}
 				type={editModal.type}
+			/>
+			<DeleteModal
+				show={deleteModal.visible}
+				id={deleteModal.id}
+				name={deleteModal.name}
+				type={deleteModal.type}
+				onHide={() =>
+					setDeleteModal({ ...deleteModal, visible: false })
+				}
 			/>
 			{previewer.visible && (
 				<Previewer

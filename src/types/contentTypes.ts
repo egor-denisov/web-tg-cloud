@@ -13,6 +13,7 @@ export enum ContentActionTypes {
 	FETCH_CONTENT_ERROR = 'FETCH_CONTENT_ERROR',
 	UPDATE_ITEM_NAME = 'UPDATE_ITEM_NAME',
 	CREATE_DIRECTORY = 'CREATE_DIRECTORY',
+	DELETE_ITEM = 'DELETE_ITEM',
 	SET_ERROR = 'SET_ERROR',
 	SET_NOTIFICATION = 'SET_NOTIFICATION'
 }
@@ -39,6 +40,13 @@ interface CreateDirectoryAction {
 	type: ContentActionTypes.CREATE_DIRECTORY
 	payload: DirectoryType
 }
+interface DeleteItemAction {
+	type: ContentActionTypes.DELETE_ITEM
+	payload: {
+		id: number
+		type: string
+	}
+}
 interface SetErrorAction {
 	type: ContentActionTypes.SET_ERROR
 	payload: null | string
@@ -54,5 +62,6 @@ export type ContentAction =
 	| FetchContentErrorAction
 	| UpdateItemNameAction
 	| CreateDirectoryAction
+	| DeleteItemAction
 	| SetErrorAction
 	| SetNotificationAction

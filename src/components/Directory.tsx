@@ -17,9 +17,10 @@ type props = {
 	directory: DirectoryType
 	goAbout: Function
 	goRename: Function
+	goDelete: Function
 }
 
-const Directory: FC<props> = ({ directory, goAbout, goRename }) => {
+const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 	const { changeDirectory } = useActions()
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	const handleSelectMenu = (eventKey: string | undefined) => {
@@ -30,8 +31,12 @@ const Directory: FC<props> = ({ directory, goAbout, goRename }) => {
 			case 3:
 				goRename()
 				break
+			case 5:
+				goDelete()
+				break
 			case 6:
 				goAbout()
+				break
 		}
 		ref.current?.close()
 	}

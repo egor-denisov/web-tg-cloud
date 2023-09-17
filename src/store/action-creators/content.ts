@@ -117,11 +117,46 @@ export const editItem = (id: number, newName: string, type: string) => {
 			.then(() => {
 				dispatch({
 					type: ContentActionTypes.SET_NOTIFICATION,
-					payload: 'Name is successfully edited'
+					payload: 'Name was successfully edited'
 				})
 			})
 			.catch((err) => {
-				console.log(err)
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: err.response?.data
+				})
+			})
+	}
+}
+
+export const deleteItem = (id: number, directory_id: number, type: string) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get('http://localhost:8080/delete', {
+				params: {
+					id: id,
+					directory_id: directory_id,
+					type: type
+				}
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.DELETE_ITEM,
+					payload: {
+						id: id,
+						type: type
+					}
+				})
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: `${
+						type[0].toUpperCase() + type.slice(1)
+					} was successfully deleted`
+				})
+			})
+			.catch((err) => {
 				dispatch({
 					type: ContentActionTypes.SET_ERROR,
 					payload: err.response?.data

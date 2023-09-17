@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { Drawer } from 'rsuite'
-import { DirectoryType, FileType } from '../../types'
 import { formatBytes } from '../../utils/helper'
 
 type props = {

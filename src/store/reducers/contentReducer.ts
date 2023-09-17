@@ -31,14 +31,13 @@ export const ContentReducer = (
 						return { ...state, content: { ...newContent } }
 					}
 				})
-			} else {
-				newContent.files.forEach((el, i) => {
-					if (el.id === action.payload.id) {
-						newContent.files[i].name = action.payload.name
-						return { ...state, content: { ...newContent } }
-					}
-				})
 			}
+			newContent.files.forEach((el, i) => {
+				if (el.id === action.payload.id) {
+					newContent.files[i].name = action.payload.name
+					return { ...state, content: { ...newContent } }
+				}
+			})
 			return { ...state }
 		case ContentActionTypes.CREATE_DIRECTORY:
 			return {
@@ -46,6 +45,27 @@ export const ContentReducer = (
 				content: {
 					...state.content,
 					directories: [...state.content.directories, action.payload]
+				}
+			}
+		case ContentActionTypes.DELETE_ITEM:
+			if (action.payload.type === 'directory') {
+				return {
+					...state,
+					content: {
+						...state.content,
+						directories: state.content.directories.filter(
+							(d) => d.id !== action.payload.id
+						)
+					}
+				}
+			}
+			return {
+				...state,
+				content: {
+					...state.content,
+					files: state.content.files.filter(
+						(f) => f.id !== action.payload.id
+					)
 				}
 			}
 		case ContentActionTypes.SET_ERROR:

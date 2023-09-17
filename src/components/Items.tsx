@@ -6,8 +6,14 @@ type props = {
 	setAboutData: Function
 	setEditModal: Function
 	setPreviewer: Function
+	setDeleteModal: Function
 }
-const Items: FC<props> = ({ setAboutData, setEditModal, setPreviewer }) => {
+const Items: FC<props> = ({
+	setAboutData,
+	setEditModal,
+	setPreviewer,
+	setDeleteModal
+}) => {
 	const { content } = useTypedSelector((state) => state.content)
 	return (
 		<div className="items">
@@ -21,6 +27,14 @@ const Items: FC<props> = ({ setAboutData, setEditModal, setPreviewer }) => {
 							setEditModal({
 								visible: true,
 								item: directory,
+								type: 'directory'
+							})
+						}
+						goDelete={() =>
+							setDeleteModal({
+								visible: true,
+								id: directory.id,
+								name: directory.name,
 								type: 'directory'
 							})
 						}
@@ -46,6 +60,14 @@ const Items: FC<props> = ({ setAboutData, setEditModal, setPreviewer }) => {
 							setEditModal({
 								visible: true,
 								item: file,
+								type: 'file'
+							})
+						}
+						goDelete={() =>
+							setDeleteModal({
+								visible: true,
+								id: file.id,
+								name: file.name,
 								type: 'file'
 							})
 						}

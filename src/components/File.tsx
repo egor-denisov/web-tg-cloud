@@ -18,9 +18,17 @@ type props = {
 	goSave: Function
 	goAbout: Function
 	goRename: Function
+	goDelete: Function
 }
 
-const File: FC<props> = ({ file, goPreview, goSave, goAbout, goRename }) => {
+const File: FC<props> = ({
+	file,
+	goPreview,
+	goSave,
+	goAbout,
+	goRename,
+	goDelete
+}) => {
 	const [imageSrc, setImageSrc] = useState('')
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	useEffect(() => {
@@ -40,6 +48,9 @@ const File: FC<props> = ({ file, goPreview, goSave, goAbout, goRename }) => {
 				break
 			case 3:
 				goRename()
+				break
+			case 5:
+				goDelete()
 				break
 			case 6:
 				goAbout()
