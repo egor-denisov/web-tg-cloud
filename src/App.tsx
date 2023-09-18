@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { useActions } from './hooks/useActions'
 import Drive from './pages/Drive'
+import Auth from './pages/Auth'
 
 const getRouter = () => {
 	return createBrowserRouter([
@@ -9,12 +11,8 @@ const getRouter = () => {
 			element: <Drive />
 		},
 		{
-			path: '/login/',
-			element: (
-				<>
-					<p>login</p>
-				</>
-			)
+			path: '/auth/',
+			element: <Auth />
 		},
 		{
 			path: '/home/',
@@ -31,6 +29,19 @@ const getRouter = () => {
 	])
 }
 const App = () => {
+	const { login } = useActions()
+	window.addEventListener('storage', () => {
+		login(
+			window.localStorage.getItem('user_id'),
+			window.localStorage.getItem('hash')
+		)
+	})
+	useEffect(() => {
+		login(
+			window.localStorage.getItem('user_id'),
+			window.localStorage.getItem('hash')
+		)
+	})
 	return (
 		<div>
 			<RouterProvider router={getRouter()} />

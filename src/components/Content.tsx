@@ -50,11 +50,8 @@ const Content = () => {
 	const { data, currentDirectory, authorized } = useTypedSelector(
 		(state) => state.user
 	)
-	const { fetchContent, login, clearNotification, clearError } = useActions()
+	const { fetchContent, clearNotification, clearError } = useActions()
 
-	useEffect(() => {
-		login()
-	}, [])
 	useEffect(() => {
 		if (authorized) {
 			fetchContent(data.userId, data.currentDirectoryId)
@@ -126,6 +123,9 @@ const Content = () => {
 		if (change >= 0 && change < content.files.length) {
 			setPreviewer({ ...previewer, fileIndex: change })
 		}
+	}
+	if (!authorized) {
+		return <div>You dont authorized!</div>
 	}
 	if (loading) {
 		return (

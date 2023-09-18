@@ -4,11 +4,12 @@ import { UserAction, UserActionTypes } from '../../types/userTypes'
 import { DirectoryType, UserDataType } from '../../types'
 import { iso2date } from '../../utils/helper'
 
-export const login = () => {
+export const login = (user_id: string | null, hash: string | null) => {
 	return async (dispatch: Dispatch<UserAction>) => {
+		console.log(user_id, hash)
 		await axios
 			.get('http://localhost:8080/auth', {
-				params: { user_id: 694916310 }
+				params: { user_id: user_id, hash: hash }
 			})
 			.then((response) => {
 				dispatch({
