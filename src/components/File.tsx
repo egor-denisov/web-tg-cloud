@@ -31,13 +31,6 @@ const File: FC<props> = ({
 }) => {
 	const [imageSrc, setImageSrc] = useState('')
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
-	useEffect(() => {
-		const img = new Image()
-		img.onload = () => {
-			setImageSrc(file.thumbnailSource)
-		}
-		img.src = file.thumbnailSource
-	}, [file.id])
 	const handleSelectMenu = (eventKey: string | undefined) => {
 		switch (Number(eventKey)) {
 			case 1:
@@ -96,10 +89,10 @@ const File: FC<props> = ({
 				onClick={() => goPreview()}
 			>
 				<div className="thumbnail">
-					{imageSrc.length === 0 ? (
+					{file.thumbnailFileId.length === 0 ? (
 						<PictureThumbnail />
 					) : (
-						<img src={imageSrc} alt="" />
+						<img src={file.thumbnailSource} alt="" />
 					)}
 				</div>
 				<div className="name">{makeNameShorter(file.name)}</div>

@@ -65,7 +65,9 @@ const Content = () => {
 		if (notification != null) {
 			toaster.push(
 				<Notification type="success" header={'Success'} closable>
-					<p>{notification}</p>
+					<p>
+						{notification[0].toUpperCase() + notification.slice(1)}
+					</p>
 				</Notification>,
 				{ placement: 'topEnd' }
 			)
@@ -77,7 +79,7 @@ const Content = () => {
 		if (error != null) {
 			toaster.push(
 				<Notification type="error" header={'Error'} closable>
-					<p>{error}</p>
+					<p>{error[0].toUpperCase() + error.slice(1)}</p>
 				</Notification>,
 				{ placement: 'topEnd' }
 			)
@@ -136,6 +138,7 @@ const Content = () => {
 		<div className="content">
 			<Path path={path} />
 			<Items
+				content={content}
 				setAboutData={setAboutData}
 				setEditModal={setEditModal}
 				setPreviewer={setPreviewer}

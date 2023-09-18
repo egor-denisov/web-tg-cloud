@@ -94,12 +94,18 @@ export const createDirectory = (directory: DirectoryType) => {
 	}
 }
 
-export const editItem = (id: number, newName: string, type: string) => {
+export const editItem = (
+	id: number,
+	directory_id: number,
+	newName: string,
+	type: string
+) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
 			.get('http://localhost:8080/edit', {
 				params: {
 					id: id,
+					directory_id: directory_id,
 					name: newName,
 					type: type
 				}
@@ -151,9 +157,52 @@ export const deleteItem = (id: number, directory_id: number, type: string) => {
 			.then(() => {
 				dispatch({
 					type: ContentActionTypes.SET_NOTIFICATION,
-					payload: `${
-						type[0].toUpperCase() + type.slice(1)
-					} was successfully deleted`
+					payload: type + ' was successfully deleted'
+				})
+			})
+			.catch((err) => {
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: err.response?.data
+				})
+			})
+	}
+}
+
+export const addNewFile = (id: number) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get('http://localhost:8080/fileInfo', {
+				params: {
+					id: id
+				}
+			})
+			.then((response) => {
+				dispatch({
+					type: ContentActionTypes.ADD_NEW_FILE,
+					payload: <FileType>{
+						id: response.data['id'],
+						name: response.data['name'],
+						fileId: response.data['file_id'],
+						fileUniqueId: response.data['file_unique_id'],
+						fileSize: response.data['file_size'],
+						type: response.data['file_type'],
+						created: iso2date(response.data['created']),
+						thumbnailFileId: response.data['thumbnail_file_id'],
+						thumbnailSource:
+							'http://localhost:8080/thumbnail?id=' +
+							response.data['id'],
+						fileSource:
+							'http://localhost:8080/file?id=' +
+							response.data['id']
+					}
+				})
+				return response.data['name']
+			})
+			.then((name) => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: name + ' was successfully uploaded'
 				})
 			})
 			.catch((err) => {

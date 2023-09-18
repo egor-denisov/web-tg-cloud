@@ -15,12 +15,16 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 	const [imageSrc, setImageSrc] = useState('')
 
 	useEffect(() => {
-		setImageSrc(file.thumbnailSource)
-		const img = new Image()
-		img.onload = () => {
-			setImageSrc(file.fileSource)
+		if (file.type.slice(0, 5) === 'image') {
+			if (file.thumbnailFileId.length > 0) {
+				setImageSrc(file.thumbnailSource)
+			}
+			const img = new Image()
+			img.onload = () => {
+				setImageSrc(file.fileSource)
+			}
+			img.src = file.fileSource
 		}
-		img.src = file.fileSource
 	}, [file.id])
 
 	const savePhoto = (e: React.MouseEvent, imageSrc: string) => {
@@ -35,7 +39,9 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 	return (
 		<div className="previewer" onClick={() => setVisible(false)}>
 			<div className="content" onClick={(e) => e.stopPropagation()}>
-				<img src={imageSrc} alt="" />
+				{file.type.slice(0, 5) === 'image' && (
+					<img src={imageSrc} alt="" />
+				)}
 				<figcaption>{file.name}</figcaption>
 			</div>
 			<div className="navigator">

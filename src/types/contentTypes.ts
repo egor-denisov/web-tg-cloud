@@ -1,4 +1,4 @@
-import { ContentType, DirectoryType } from '.'
+import { ContentType, DirectoryType, FileType } from '.'
 
 export interface ContentState {
 	content: ContentType
@@ -14,6 +14,7 @@ export enum ContentActionTypes {
 	UPDATE_ITEM_NAME = 'UPDATE_ITEM_NAME',
 	CREATE_DIRECTORY = 'CREATE_DIRECTORY',
 	DELETE_ITEM = 'DELETE_ITEM',
+	ADD_NEW_FILE = 'ADD_NEW_FILE',
 	SET_ERROR = 'SET_ERROR',
 	SET_NOTIFICATION = 'SET_NOTIFICATION'
 }
@@ -47,6 +48,10 @@ interface DeleteItemAction {
 		type: string
 	}
 }
+interface AddNewFile {
+	type: ContentActionTypes.ADD_NEW_FILE
+	payload: FileType
+}
 interface SetErrorAction {
 	type: ContentActionTypes.SET_ERROR
 	payload: null | string
@@ -63,5 +68,6 @@ export type ContentAction =
 	| UpdateItemNameAction
 	| CreateDirectoryAction
 	| DeleteItemAction
+	| AddNewFile
 	| SetErrorAction
 	| SetNotificationAction

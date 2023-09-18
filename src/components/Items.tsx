@@ -2,19 +2,21 @@ import React, { FC } from 'react'
 import Directory from './Directory'
 import File from './File'
 import { useTypedSelector } from '../hooks/useTypedSelector'
+import { ContentType } from '../types'
 type props = {
+	content: ContentType
 	setAboutData: Function
 	setEditModal: Function
 	setPreviewer: Function
 	setDeleteModal: Function
 }
 const Items: FC<props> = ({
+	content,
 	setAboutData,
 	setEditModal,
 	setPreviewer,
 	setDeleteModal
 }) => {
-	const { content } = useTypedSelector((state) => state.content)
 	return (
 		<div className="items">
 			{content.directories.map((directory, index) => {

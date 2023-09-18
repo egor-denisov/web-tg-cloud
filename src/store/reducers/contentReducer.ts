@@ -68,6 +68,14 @@ export const ContentReducer = (
 					)
 				}
 			}
+		case ContentActionTypes.ADD_NEW_FILE:
+			return {
+				...state,
+				content: {
+					...state.content,
+					files: [...state.content.files, action.payload]
+				}
+			}
 		case ContentActionTypes.SET_ERROR:
 			return { ...state, error: action.payload }
 		case ContentActionTypes.SET_NOTIFICATION:

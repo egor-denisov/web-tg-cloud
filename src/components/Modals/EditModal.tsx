@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { Button, Container, Drawer, Input } from 'rsuite'
 import { useActions } from '../../hooks/useActions'
 import { DirectoryType, FileType } from '../../types'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 type props = {
 	show: boolean
@@ -12,10 +13,11 @@ type props = {
 
 const EditModal: FC<props> = ({ show, item, type, onHide }) => {
 	const [name, setName] = useState('')
+	const { currentDirectory } = useTypedSelector((state) => state.user)
 	const { editItem } = useActions()
 	const edit = () => {
 		if (name !== item.name) {
-			editItem(item.id, name, type)
+			editItem(item.id, currentDirectory.id, name, type)
 		}
 	}
 	useEffect(() => {
