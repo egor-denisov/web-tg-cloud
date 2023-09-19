@@ -30,17 +30,14 @@ const getRouter = () => {
 }
 const App = () => {
 	const { login } = useActions()
-	window.addEventListener('storage', () => {
-		login(
-			window.localStorage.getItem('user_id'),
-			window.localStorage.getItem('hash')
-		)
-	})
 	useEffect(() => {
 		login(
 			window.localStorage.getItem('user_id'),
-			window.localStorage.getItem('hash')
+			window.localStorage.getItem('username'),
+			window.localStorage.getItem('first_name'),
+			window.localStorage.getItem('last_name')
 		)
+		document.body.querySelector('#telegram-login-StorageTest1Bot')?.remove()
 	})
 	return (
 		<div>

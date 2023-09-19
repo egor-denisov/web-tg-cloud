@@ -3,13 +3,14 @@ import { DirectoryType, UserDataType } from '.'
 export type UserState = {
 	data: UserDataType
 	currentDirectory: DirectoryType
+	loadingAuth: boolean
 	authorized: boolean
 	error: null | string
 }
 
 export enum UserActionTypes {
 	LOGIN_USER = 'LOGIN_USER',
-	REGISTER_USER = 'REGISTER_USER',
+	START_LOGIN = 'START_LOGIN',
 	UPDATE_USER = 'UPDATE_USER',
 	LOGOUT_USER = 'LOGOUT_USER',
 	CHANGE_DIRECTORY = 'CHANGE_DIRECTORY',
@@ -19,9 +20,8 @@ interface LoginUser {
 	type: UserActionTypes.LOGIN_USER
 	payload: UserDataType
 }
-interface RegisterUser {
-	type: UserActionTypes.REGISTER_USER
-	payload: UserDataType
+interface StartLoginUser {
+	type: UserActionTypes.START_LOGIN
 }
 interface UpdateUser {
 	type: UserActionTypes.UPDATE_USER
@@ -41,7 +41,7 @@ interface SetError {
 
 export type UserAction =
 	| LoginUser
-	| RegisterUser
+	| StartLoginUser
 	| LogoutUser
 	| UpdateUser
 	| ChangeDirectory

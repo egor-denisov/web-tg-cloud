@@ -8,7 +8,9 @@
 	font-family: 'Poppins', sans-serif;
 	transition: all 0.1s ease-out;
 }
-
+#telegram-login-StorageTest1Bot {
+	display: none;
+}
 .content {
 	.path {
 		margin: 15px;
@@ -136,5 +138,16 @@
 				padding: 10px 40px 10px 10px;
 			}
 		}
+	}
+}
+.auth {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	.rs-flex-box-grid {
+		margin: auto;
 	}
 }

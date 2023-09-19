@@ -11,6 +11,7 @@ const initialState: UserState = {
 		currentDirectoryId: -1
 	},
 	currentDirectory: <DirectoryType>{},
+	loadingAuth: false,
 	authorized: false,
 	error: null
 }
@@ -21,9 +22,14 @@ export const UserReducer = (
 ): UserState => {
 	switch (action.type) {
 		case UserActionTypes.LOGIN_USER:
-			return { ...state, authorized: true, data: action.payload }
-		case UserActionTypes.REGISTER_USER:
-			return { ...state, authorized: true, data: action.payload }
+			return {
+				...state,
+				authorized: true,
+				data: action.payload,
+				loadingAuth: false
+			}
+		case UserActionTypes.START_LOGIN:
+			return { ...state, loadingAuth: true }
 		case UserActionTypes.UPDATE_USER:
 			return { ...state, data: action.payload }
 		case UserActionTypes.LOGOUT_USER:

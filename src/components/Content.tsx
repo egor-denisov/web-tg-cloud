@@ -47,9 +47,8 @@ const Content = () => {
 	const { content, error, loading, notification } = useTypedSelector(
 		(state) => state.content
 	)
-	const { data, currentDirectory, authorized } = useTypedSelector(
-		(state) => state.user
-	)
+	const { data, currentDirectory, loadingAuth, authorized } =
+		useTypedSelector((state) => state.user)
 	const { fetchContent, clearNotification, clearError } = useActions()
 
 	useEffect(() => {
@@ -127,13 +126,10 @@ const Content = () => {
 	if (!authorized) {
 		return <div>You dont authorized!</div>
 	}
-	if (loading) {
-		return (
-			<div id="loaderInverseWrapper" style={{ height: 200 }}>
-				<Loader inverse center content="loading..." />
-			</div>
-		)
+	if (loadingAuth || loading) {
+		return <div>LOADING</div>
 	}
+
 	return (
 		<div className="content">
 			<Path path={path} />
