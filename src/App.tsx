@@ -37,8 +37,7 @@ const App = () => {
 			window.localStorage.getItem('first_name'),
 			window.localStorage.getItem('last_name')
 		)
-		document.body.querySelector('#telegram-login-StorageTest1Bot')?.remove()
-	})
+	}, [])
 	return (
 		<div>
 			<RouterProvider router={getRouter()} />

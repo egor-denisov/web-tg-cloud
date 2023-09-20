@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import { FileType } from '../types'
-import PictureThumbnail from '../svg/PictureThumbnail'
+import FileText from '../svg/FileText'
 import { makeNameShorter } from '../utils/helper'
 import { Dropdown, Popover, Whisper } from 'rsuite'
 import { OverlayTriggerHandle } from 'rsuite/esm/Picker'
@@ -29,7 +29,6 @@ const File: FC<props> = ({
 	goRename,
 	goDelete
 }) => {
-	const [imageSrc, setImageSrc] = useState('')
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	const handleSelectMenu = (eventKey: string | undefined) => {
 		switch (Number(eventKey)) {
@@ -90,7 +89,7 @@ const File: FC<props> = ({
 			>
 				<div className="thumbnail">
 					{file.thumbnailFileId.length === 0 ? (
-						<PictureThumbnail />
+						<FileText />
 					) : (
 						<img src={file.thumbnailSource} alt="" />
 					)}

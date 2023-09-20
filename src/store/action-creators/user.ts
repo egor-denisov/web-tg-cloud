@@ -11,6 +11,9 @@ export const login = (
 	lastName: string | null
 ) => {
 	return async (dispatch: Dispatch<UserAction>) => {
+		if (user_id === null || user_id === 'undefined') {
+			return
+		}
 		dispatch({
 			type: UserActionTypes.START_LOGIN
 		})

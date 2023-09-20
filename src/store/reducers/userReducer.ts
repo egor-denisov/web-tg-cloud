@@ -41,7 +41,7 @@ export const UserReducer = (
 				currentDirectory: action.payload
 			}
 		case UserActionTypes.SET_ERROR:
-			return { ...state, error: action.payload }
+			return { ...state, error: action.payload, loadingAuth: false }
 		default:
 			return state
 	}

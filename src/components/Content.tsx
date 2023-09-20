@@ -10,6 +10,7 @@ import EditModal from './Modals/EditModal'
 import { DirectoryType, FileType } from '../types'
 import Items from './Items'
 import DeleteModal from './Modals/DeleteModal'
+import Auth from '../pages/Auth'
 
 type ItemType = FileType | DirectoryType
 
@@ -123,11 +124,15 @@ const Content = () => {
 			setPreviewer({ ...previewer, fileIndex: change })
 		}
 	}
-	if (!authorized) {
-		return <div>You dont authorized!</div>
-	}
 	if (loadingAuth || loading) {
-		return <div>LOADING</div>
+		return (
+			<div className="loader">
+				<Loader size="lg" content="Loading..." vertical />
+			</div>
+		)
+	}
+	if (!authorized) {
+		return <Auth />
 	}
 
 	return (

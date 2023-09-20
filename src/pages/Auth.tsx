@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useActions } from '../hooks/useActions'
-import { useNavigate } from 'react-router-dom'
-import { Button, Content, FlexboxGrid, Panel } from 'rsuite'
+import { Button, FlexboxGrid, Panel } from 'rsuite'
 interface ResponseType {
 	auth_date: number
 	first_name: string
@@ -12,7 +11,6 @@ interface ResponseType {
 	username: string
 }
 const Auth = () => {
-	const navigate = useNavigate()
 	const { login } = useActions()
 	useEffect(() => {
 		const script = document.createElement('script')
@@ -43,7 +41,6 @@ const Auth = () => {
 					data.first_name,
 					data.last_name
 				)
-				navigate('/')
 			}
 		)
 	}

@@ -67,6 +67,16 @@
 		background-color: rgba($color: $jet, $alpha: 0.5);
 		.content {
 			text-align: center;
+			.card {
+				background-color: rgba($color: $jet, $alpha: 0.2);
+				padding: 40px;
+				color: white;
+				font-weight: 500;
+				font-size: 24px;
+				.text {
+					padding: 20px;
+				}
+			}
 			img {
 				max-height: 85vh;
 				max-width: 95vw;
@@ -140,14 +150,14 @@
 		}
 	}
 }
-.auth {
+.auth,
+.loader {
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	display: flex;
-	.rs-flex-box-grid {
-		margin: auto;
-	}
+	justify-content: center;
+	align-items: center;
 }

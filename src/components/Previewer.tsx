@@ -4,6 +4,7 @@ import ChevronLeftSVG from '../svg/ChevronLeft'
 import ChevronRightSVG from '../svg/ChevronRight'
 import CloseSVG from '../svg/Close'
 import DownloadSVG from '../svg/Download'
+import { Button } from 'rsuite'
 
 type props = {
 	file: FileType
@@ -27,9 +28,9 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 		}
 	}, [file.id])
 
-	const savePhoto = (e: React.MouseEvent, imageSrc: string) => {
+	const saveFile = (e: React.MouseEvent, src: string) => {
 		e.stopPropagation()
-		window.location.replace(imageSrc)
+		window.location.replace(src)
 	}
 	const goJump = (e: React.MouseEvent, step: number) => {
 		e.stopPropagation()
@@ -39,8 +40,15 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 	return (
 		<div className="previewer" onClick={() => setVisible(false)}>
 			<div className="content" onClick={(e) => e.stopPropagation()}>
-				{file.type.slice(0, 5) === 'image' && (
+				{file.type.slice(0, 5) === 'image' ? (
 					<img src={imageSrc} alt="" />
+				) : (
+					<div className="card">
+						<p className="text">Preview is not available</p>
+						<Button onClick={(e) => saveFile(e, file.fileSource)}>
+							Download!
+						</Button>
+					</div>
 				)}
 				<figcaption>{file.name}</figcaption>
 			</div>
@@ -56,7 +64,7 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 				</div>
 				<div
 					className="btn save"
-					onClick={(e) => savePhoto(e, file.fileSource)}
+					onClick={(e) => saveFile(e, file.fileSource)}
 				>
 					<DownloadSVG />
 				</div>
