@@ -20,14 +20,6 @@ const Auth = () => {
 		script.setAttribute('data-telegram-login', 'StorageTest1Bot')
 		script.setAttribute('data-size', 'large')
 		script.setAttribute('data-userpic', 'false')
-		script.setAttribute(
-			'data-onauth',
-			`localStorage.setItem('user_id', user.id);
-			localStorage.setItem('username', user.username);
-			localStorage.setItem('first_name', user.first_name);
-			localStorage.setItem('last_name', user.last_name);
-            window.dispatchEvent(new Event("storage"));`
-		)
 		script.setAttribute('data-request-access', 'write')
 		document.body.appendChild(script)
 	}, [])
@@ -35,6 +27,10 @@ const Auth = () => {
 		;(window as any)?.Telegram?.Login.auth(
 			{ bot_id: '5837544572' },
 			(data: ResponseType) => {
+				localStorage.setItem('user_id', String(data.id))
+				localStorage.setItem('username', data.username)
+				localStorage.setItem('first_name', data.first_name)
+				localStorage.setItem('last_name', data.last_name)
 				login(
 					String(data.id),
 					data.username,
