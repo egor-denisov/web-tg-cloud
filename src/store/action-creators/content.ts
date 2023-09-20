@@ -3,17 +3,15 @@ import axios from 'axios'
 import { ContentAction, ContentActionTypes } from '../../types/contentTypes'
 import { ContentType, DirectoryType, FileType } from '../../types'
 import { iso2date } from '../../utils/helper'
+import { SERVER } from '../../env'
 
 export const fetchContent = (user_id: number, directory_id = -1) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		try {
 			dispatch({ type: ContentActionTypes.FETCH_CONTENT })
-			const response = await axios.get(
-				'http://localhost:8080/available',
-				{
-					params: { user_id: user_id, directory_id: directory_id }
-				}
-			)
+			const response = await axios.get(`${SERVER}/available`, {
+				params: { user_id: user_id, directory_id: directory_id }
+			})
 			let res: ContentType = { files: [], directories: [] }
 			if (response.data['files'] !== null) {
 				res.files = response.data['files'].map((f: any) => {
@@ -26,9 +24,8 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 						type: f['file_type'],
 						created: iso2date(f['created']),
 						thumbnailFileId: f['thumbnail_file_id'],
-						thumbnailSource:
-							'http://localhost:8080/thumbnail?id=' + f['id'],
-						fileSource: 'http://localhost:8080/file?id=' + f['id']
+						thumbnailSource: `${SERVER}/thumbnail?id=${f['id']}`,
+						fileSource: `${SERVER}/file?id=${f['id']}`
 					}
 				})
 			}
@@ -64,7 +61,7 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 export const createDirectory = (directory: DirectoryType) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
-			.get('http://localhost:8080/createDirectory', {
+			.get(`${SERVER}/createDirectory`, {
 				params: {
 					directory: JSON.stringify({
 						...directory,
@@ -102,7 +99,7 @@ export const editItem = (
 ) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
-			.get('http://localhost:8080/edit', {
+			.get(`${SERVER}/edit`, {
 				params: {
 					id: id,
 					directory_id: directory_id,
@@ -138,7 +135,7 @@ export const editItem = (
 export const deleteItem = (id: number, directory_id: number, type: string) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
-			.get('http://localhost:8080/delete', {
+			.get(`${SERVER}/delete`, {
 				params: {
 					id: id,
 					directory_id: directory_id,
@@ -172,7 +169,7 @@ export const deleteItem = (id: number, directory_id: number, type: string) => {
 export const addNewFile = (id: number) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
-			.get('http://localhost:8080/fileInfo', {
+			.get(`${SERVER}/fileInfo`, {
 				params: {
 					id: id
 				}
@@ -189,12 +186,8 @@ export const addNewFile = (id: number) => {
 						type: response.data['file_type'],
 						created: iso2date(response.data['created']),
 						thumbnailFileId: response.data['thumbnail_file_id'],
-						thumbnailSource:
-							'http://localhost:8080/thumbnail?id=' +
-							response.data['id'],
-						fileSource:
-							'http://localhost:8080/file?id=' +
-							response.data['id']
+						thumbnailSource: `${SERVER}/thumbnail?id=${response.data['id']}`,
+						fileSource: `${SERVER}/file?id=${response.data['id']}`
 					}
 				})
 				return response.data['name']

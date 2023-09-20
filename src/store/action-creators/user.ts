@@ -3,6 +3,7 @@ import axios from 'axios'
 import { UserAction, UserActionTypes } from '../../types/userTypes'
 import { DirectoryType, UserDataType } from '../../types'
 import { iso2date } from '../../utils/helper'
+import { SERVER } from '../../env'
 
 export const login = (
 	user_id: string | null,
@@ -18,7 +19,7 @@ export const login = (
 			type: UserActionTypes.START_LOGIN
 		})
 		await axios
-			.get('http://localhost:8080/auth', {
+			.get(`${SERVER}/auth`, {
 				params: {
 					user_id: user_id,
 					username: username,
@@ -47,7 +48,7 @@ export const login = (
 			.catch((e) => {
 				dispatch({
 					type: UserActionTypes.SET_ERROR,
-					payload: 'Error with user login' + e
+					payload: "Couldn't log in. Try again"
 				})
 			})
 	}
@@ -55,12 +56,9 @@ export const login = (
 export const changeDirectory = (id: number) => {
 	return async (dispatch: Dispatch<UserAction>) => {
 		try {
-			const response = await axios.get(
-				'http://localhost:8080/directory',
-				{
-					params: { id: id }
-				}
-			)
+			const response = await axios.get(`${SERVER}/directory`, {
+				params: { id: id }
+			})
 			var d = response.data
 			dispatch({
 				type: UserActionTypes.CHANGE_DIRECTORY,

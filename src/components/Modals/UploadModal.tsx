@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { Drawer, Uploader } from 'rsuite'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
+import { SERVER } from '../../env'
 
 type props = {
 	show: boolean
@@ -21,7 +22,7 @@ const UploadDrawer: FC<props> = ({ show, onHide }) => {
 				</Drawer.Header>
 				<Drawer.Body style={{ textAlign: 'center' }}>
 					<Uploader
-						action="http://localhost:8080/upload"
+						action={`${SERVER}/upload`}
 						data={{
 							user_id: data.userId,
 							directory_id: data.currentDirectoryId
