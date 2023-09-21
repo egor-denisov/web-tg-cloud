@@ -15,7 +15,7 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 			let res: ContentType = { files: [], directories: [] }
 			if (response.data['files'] !== null) {
 				res.files = response.data['files'].map((f: any) => {
-					return <FileType>{
+					return {
 						id: f['id'],
 						name: f['name'],
 						fileId: f['file_id'],
@@ -26,13 +26,13 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 						thumbnailFileId: f['thumbnail_file_id'],
 						thumbnailSource: `${SERVER}/thumbnail?id=${f['id']}`,
 						fileSource: `${SERVER}/file?id=${f['id']}`
-					}
+					} as FileType
 				})
 			}
 
 			if (response.data['directories'] !== null) {
 				res.directories = response.data['directories'].map((d: any) => {
-					return <DirectoryType>{
+					return {
 						id: d['id'],
 						parentId: d['parent_id'],
 						name: d['name'],
@@ -42,7 +42,7 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 						size: d['size'],
 						path: d['path'],
 						created: iso2date(d['created'])
-					}
+					} as DirectoryType
 				})
 			}
 			dispatch({
@@ -177,7 +177,7 @@ export const addNewFile = (id: number) => {
 			.then((response) => {
 				dispatch({
 					type: ContentActionTypes.ADD_NEW_FILE,
-					payload: <FileType>{
+					payload: {
 						id: response.data['id'],
 						name: response.data['name'],
 						fileId: response.data['file_id'],
@@ -188,7 +188,7 @@ export const addNewFile = (id: number) => {
 						thumbnailFileId: response.data['thumbnail_file_id'],
 						thumbnailSource: `${SERVER}/thumbnail?id=${response.data['id']}`,
 						fileSource: `${SERVER}/file?id=${response.data['id']}`
-					}
+					} as FileType
 				})
 				return response.data['name']
 			})

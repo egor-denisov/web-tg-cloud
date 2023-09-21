@@ -30,14 +30,14 @@ export const login = (
 			.then((response) => {
 				dispatch({
 					type: UserActionTypes.LOGIN_USER,
-					payload: <UserDataType>{
+					payload: {
 						id: response.data['id'],
 						username: response.data['username'],
 						userId: response.data['user_id'],
 						firstname: response.data['firstname'],
 						lastname: response.data['lastname'],
 						currentDirectoryId: response.data['current_directory']
-					}
+					} as UserDataType
 				})
 				return response
 			})
@@ -62,7 +62,7 @@ export const changeDirectory = (id: number) => {
 			var d = response.data
 			dispatch({
 				type: UserActionTypes.CHANGE_DIRECTORY,
-				payload: <DirectoryType>{
+				payload: {
 					id: d['id'],
 					parentId: d['parent_id'],
 					name: d['name'],
@@ -72,7 +72,7 @@ export const changeDirectory = (id: number) => {
 					size: d['size'],
 					path: d['path'],
 					created: iso2date(d['created'])
-				}
+				} as DirectoryType
 			})
 		} catch (e) {
 			dispatch({

@@ -46,7 +46,7 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 					<div className="card">
 						<p className="text">Preview is not available</p>
 						<Button onClick={(e) => saveFile(e, file.fileSource)}>
-							Download!
+							Download
 						</Button>
 					</div>
 				)}

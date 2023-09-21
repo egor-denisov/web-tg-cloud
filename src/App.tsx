@@ -15,14 +15,6 @@ const getRouter = () => {
 			element: <Auth />
 		},
 		{
-			path: '/home/',
-			element: (
-				<>
-					<p>home</p>
-				</>
-			)
-		},
-		{
 			path: '/drive/',
 			element: <Drive />
 		}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import UploadModal from './Modals/UploadModal'
 import CreateModal from './Modals/CreateModal'
 import { Dropdown } from 'rsuite'

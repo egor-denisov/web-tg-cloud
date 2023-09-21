@@ -10,7 +10,7 @@ const initialState: UserState = {
 		lastname: '',
 		currentDirectoryId: -1
 	},
-	currentDirectory: <DirectoryType>{},
+	currentDirectory: {} as DirectoryType,
 	loadingAuth: false,
 	authorized: false,
 	error: null

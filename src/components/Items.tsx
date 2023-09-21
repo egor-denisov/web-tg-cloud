@@ -1,7 +1,6 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import Directory from './Directory'
 import File from './File'
-import { useTypedSelector } from '../hooks/useTypedSelector'
 import { ContentType } from '../types'
 type props = {
 	content: ContentType

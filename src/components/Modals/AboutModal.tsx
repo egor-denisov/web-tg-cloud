@@ -31,7 +31,7 @@ const AboutModal: FC<props> = ({ show, onHide, data }) => {
 					<p>Type: {data.type}</p>
 					<p>Size: {formatBytes(data.size ?? 0)}</p>
 					<p>Created: {data.created}</p>
-					{data.type == 'directory' && (
+					{data.type === 'directory' && (
 						<>
 							<p>Files: {data.includes?.files}</p>
 							<p>Directories: {data.includes?.directories}</p>

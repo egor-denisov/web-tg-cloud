@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC } from 'react'
 import { FileType } from '../types'
 import FileText from '../svg/FileText'
 import { makeNameShorter } from '../utils/helper'
