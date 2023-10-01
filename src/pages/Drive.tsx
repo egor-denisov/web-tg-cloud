@@ -54,7 +54,7 @@ const Drive = () => {
 
 	useEffect(() => {
 		if (authorized) {
-			fetchContent(data.userId, data.currentDirectoryId)
+			fetchContent(data.hash, data.userId, data.currentDirectoryId)
 		}
 	}, [authorized, data.userId, data.currentDirectoryId])
 

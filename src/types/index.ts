@@ -34,4 +34,5 @@ export type UserDataType = {
 	firstname: string
 	lastname: string
 	currentDirectoryId: number
+	hash: string
 }

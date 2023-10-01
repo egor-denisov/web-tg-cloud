@@ -24,10 +24,13 @@ const UploadDrawer: FC<props> = ({ show, onHide }) => {
 					<Uploader
 						action={`${SERVER}/upload`}
 						data={{
+							hash: data.hash,
 							user_id: data.userId,
 							directory_id: data.currentDirectoryId
 						}}
-						onSuccess={(response) => addNewFile(response.id)}
+						onSuccess={(response) =>
+							addNewFile(data.hash, data.userId, response.id)
+						}
 						multiple
 						draggable
 					>

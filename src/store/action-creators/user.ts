@@ -36,13 +36,17 @@ export const login = (
 						userId: response.data['user_id'],
 						firstname: response.data['firstname'],
 						lastname: response.data['lastname'],
-						currentDirectoryId: response.data['current_directory']
+						currentDirectoryId: response.data['current_directory'],
+						hash: response.data['hash']
 					} as UserDataType
 				})
 				return response
 			})
 			.then((response) => {
-				var f = changeDirectory(response.data['current_directory'])
+				var f = changeDirectory(
+					response.data['hash'],
+					response.data['current_directory']
+				)
 				f(dispatch)
 			})
 			.catch((e) => {
@@ -53,11 +57,11 @@ export const login = (
 			})
 	}
 }
-export const changeDirectory = (id: number) => {
+export const changeDirectory = (hash: string, id: number) => {
 	return async (dispatch: Dispatch<UserAction>) => {
 		try {
 			const response = await axios.get(`${SERVER}/directory`, {
-				params: { id: id }
+				params: { hash: hash, id: id }
 			})
 			var d = response.data
 			dispatch({

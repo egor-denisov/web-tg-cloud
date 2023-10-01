@@ -12,9 +12,10 @@ type props = {
 
 const DeleteModal: FC<props> = ({ show, id, name, type, onHide }) => {
 	const { currentDirectory } = useTypedSelector((state) => state.user)
+	const { data } = useTypedSelector((state) => state.user)
 	const { deleteItem } = useActions()
 	const deleteFunc = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-		deleteItem(id, currentDirectory.id, type)
+		deleteItem(data.hash, id, data.userId, currentDirectory.id, type)
 		onHide(e)
 	}
 	return (

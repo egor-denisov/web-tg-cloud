@@ -14,10 +14,18 @@ type props = {
 const EditModal: FC<props> = ({ show, item, type, onHide }) => {
 	const [name, setName] = useState('')
 	const { currentDirectory } = useTypedSelector((state) => state.user)
+	const { data } = useTypedSelector((state) => state.user)
 	const { editItem } = useActions()
 	const edit = () => {
 		if (name !== item.name) {
-			editItem(item.id, currentDirectory.id, name, type)
+			editItem(
+				data.hash,
+				data.userId,
+				item.id,
+				currentDirectory.id,
+				name,
+				type
+			)
 		}
 	}
 	useEffect(() => {

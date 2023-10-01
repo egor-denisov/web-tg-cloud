@@ -5,12 +5,20 @@ import { ContentType, DirectoryType, FileType } from '../../types'
 import { iso2date } from '../../utils/helper'
 import { SERVER } from '../../env'
 
-export const fetchContent = (user_id: number, directory_id = -1) => {
+export const fetchContent = (
+	hash: string,
+	user_id: number,
+	directory_id = -1
+) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		try {
 			dispatch({ type: ContentActionTypes.FETCH_CONTENT })
 			const response = await axios.get(`${SERVER}/available`, {
-				params: { user_id: user_id, directory_id: directory_id }
+				params: {
+					hash: hash,
+					user_id: user_id,
+					directory_id: directory_id
+				}
 			})
 			let res: ContentType = { files: [], directories: [] }
 			if (response.data['files'] !== null) {
@@ -24,8 +32,8 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 						type: f['file_type'],
 						created: iso2date(f['created']),
 						thumbnailFileId: f['thumbnail_file_id'],
-						thumbnailSource: `${SERVER}/thumbnail?id=${f['id']}`,
-						fileSource: `${SERVER}/file?id=${f['id']}`
+						thumbnailSource: `${SERVER}/thumbnail?id=${f['id']}&hash=${hash}&user_id=${user_id}`,
+						fileSource: `${SERVER}/file?id=${f['id']}&hash=${hash}&user_id=${user_id}`
 					} as FileType
 				})
 			}
@@ -58,11 +66,12 @@ export const fetchContent = (user_id: number, directory_id = -1) => {
 	}
 }
 
-export const createDirectory = (directory: DirectoryType) => {
+export const createDirectory = (hash: string, directory: DirectoryType) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
 			.get(`${SERVER}/createDirectory`, {
 				params: {
+					hash: hash,
 					directory: JSON.stringify({
 						...directory,
 						user_id: directory.userId,
@@ -92,6 +101,8 @@ export const createDirectory = (directory: DirectoryType) => {
 }
 
 export const editItem = (
+	hash: string,
+	user_id: number,
 	id: number,
 	directory_id: number,
 	newName: string,
@@ -101,6 +112,8 @@ export const editItem = (
 		await axios
 			.get(`${SERVER}/edit`, {
 				params: {
+					hash: hash,
+					user_id: user_id,
 					id: id,
 					directory_id: directory_id,
 					name: newName,
@@ -132,12 +145,20 @@ export const editItem = (
 	}
 }
 
-export const deleteItem = (id: number, directory_id: number, type: string) => {
+export const deleteItem = (
+	hash: string,
+	id: number,
+	user_id: number,
+	directory_id: number,
+	type: string
+) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
 			.get(`${SERVER}/delete`, {
 				params: {
+					hash: hash,
 					id: id,
+					user_id: user_id,
 					directory_id: directory_id,
 					type: type
 				}
@@ -166,11 +187,13 @@ export const deleteItem = (id: number, directory_id: number, type: string) => {
 	}
 }
 
-export const addNewFile = (id: number) => {
+export const addNewFile = (hash: string, user_id: number, id: number) => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		await axios
 			.get(`${SERVER}/fileInfo`, {
 				params: {
+					hash: hash,
+					user_id: user_id,
 					id: id
 				}
 			})
@@ -186,8 +209,8 @@ export const addNewFile = (id: number) => {
 						type: response.data['file_type'],
 						created: iso2date(response.data['created']),
 						thumbnailFileId: response.data['thumbnail_file_id'],
-						thumbnailSource: `${SERVER}/thumbnail?id=${response.data['id']}`,
-						fileSource: `${SERVER}/file?id=${response.data['id']}`
+						thumbnailSource: `${SERVER}/thumbnail?id=${response.data['id']}&hash=${hash}&user_id=${user_id}`,
+						fileSource: `${SERVER}/file?id=${response.data['id']}&hash=${hash}&user_id=${user_id}`
 					} as FileType
 				})
 				return response.data['name']
@@ -201,7 +224,7 @@ export const addNewFile = (id: number) => {
 			.catch((err) => {
 				dispatch({
 					type: ContentActionTypes.SET_ERROR,
-					payload: err.response?.data
+					payload: 'File was not uploaded'
 				})
 			})
 	}

@@ -8,7 +8,8 @@ const initialState: UserState = {
 		userId: -1,
 		firstname: '',
 		lastname: '',
-		currentDirectoryId: -1
+		currentDirectoryId: -1,
+		hash: ''
 	},
 	currentDirectory: {} as DirectoryType,
 	loadingAuth: false,

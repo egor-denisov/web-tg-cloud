@@ -13,6 +13,7 @@ import {
 	FolderFill,
 	FileDownload
 } from '@rsuite/icons/'
+import { useTypedSelector } from '../hooks/useTypedSelector'
 type props = {
 	directory: DirectoryType
 	goAbout: Function
@@ -23,10 +24,11 @@ type props = {
 const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 	const { changeDirectory } = useActions()
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
+	const { data } = useTypedSelector((state) => state.user)
 	const handleSelectMenu = (eventKey: string | undefined) => {
 		switch (Number(eventKey)) {
 			case 1:
-				changeDirectory(directory.id)
+				changeDirectory(data.hash, directory.id)
 				break
 			case 3:
 				goRename()
@@ -81,7 +83,7 @@ const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 			<div
 				className="item directory"
 				title={directory.name}
-				onClick={() => changeDirectory(directory.id)}
+				onClick={() => changeDirectory(data.hash, directory.id)}
 			>
 				<div className="thumbnail">
 					<FolderSVG />

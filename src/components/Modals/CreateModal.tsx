@@ -20,7 +20,7 @@ const CreateModal: FC<props> = ({ show, onHide }) => {
 			name: name,
 			userId: data.userId
 		}
-		createDirectory(d)
+		createDirectory(data.hash, d)
 	}
 	return (
 		<div className="modal">
