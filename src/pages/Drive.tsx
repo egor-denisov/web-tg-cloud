@@ -11,6 +11,7 @@ import { DirectoryType, FileType } from '../types'
 import Items from '../components/Items'
 import DeleteModal from '../components/Modals/DeleteModal'
 import Auth from './Auth'
+import ShareModal from '../components/Modals/ShareModal'
 
 type ItemType = FileType | DirectoryType
 
@@ -44,6 +45,12 @@ const Drive = () => {
 		id: -1,
 		name: '',
 		type: 'file'
+	})
+	const [shareModal, setShareModal] = useState({
+		visible: false,
+		id: -1,
+		name: '',
+		sharedId: ''
 	})
 	const { content, error, loading, notification } = useTypedSelector(
 		(state) => state.content
@@ -144,6 +151,7 @@ const Drive = () => {
 				setEditModal={setEditModal}
 				setPreviewer={setPreviewer}
 				setDeleteModal={setDeleteModal}
+				setShareModal={setShareModal}
 			/>
 			<AboutModal
 				show={aboutModal.visible}
@@ -164,6 +172,13 @@ const Drive = () => {
 				onHide={() =>
 					setDeleteModal({ ...deleteModal, visible: false })
 				}
+			/>
+			<ShareModal
+				show={shareModal.visible}
+				id={shareModal.id}
+				name={shareModal.name}
+				sharedId={shareModal.sharedId}
+				onHide={() => setShareModal({ ...shareModal, visible: false })}
 			/>
 			{previewer.visible && (
 				<Previewer

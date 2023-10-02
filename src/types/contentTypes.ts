@@ -14,6 +14,7 @@ export enum ContentActionTypes {
 	UPDATE_ITEM_NAME = 'UPDATE_ITEM_NAME',
 	CREATE_DIRECTORY = 'CREATE_DIRECTORY',
 	DELETE_ITEM = 'DELETE_ITEM',
+	CHANGE_SHARING_FILE = 'CHANGE_SHARING_FILE',
 	ADD_NEW_FILE = 'ADD_NEW_FILE',
 	SET_ERROR = 'SET_ERROR',
 	SET_NOTIFICATION = 'SET_NOTIFICATION'
@@ -48,6 +49,13 @@ interface DeleteItemAction {
 		type: string
 	}
 }
+interface ChangeSharingAction {
+	type: ContentActionTypes.CHANGE_SHARING_FILE
+	payload: {
+		id: number
+		isShared: boolean
+	}
+}
 interface AddNewFile {
 	type: ContentActionTypes.ADD_NEW_FILE
 	payload: FileType
@@ -68,6 +76,7 @@ export type ContentAction =
 	| UpdateItemNameAction
 	| CreateDirectoryAction
 	| DeleteItemAction
+	| ChangeSharingAction
 	| AddNewFile
 	| SetErrorAction
 	| SetNotificationAction

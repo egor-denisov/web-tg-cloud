@@ -33,10 +33,10 @@ const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 			case 3:
 				goRename()
 				break
-			case 5:
+			case 4:
 				goDelete()
 				break
-			case 6:
+			case 5:
 				goAbout()
 				break
 		}
@@ -66,14 +66,11 @@ const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 						<Dropdown.Item icon={<Edit />} eventKey={3}>
 							Rename
 						</Dropdown.Item>
-						<Dropdown.Item icon={<Copy />} eventKey={4}>
-							Copy
-						</Dropdown.Item>
-						<Dropdown.Item icon={<Trash />} eventKey={5}>
+						<Dropdown.Item icon={<Trash />} eventKey={4}>
 							Delete
 						</Dropdown.Item>
 						<hr style={{ margin: '0px' }} />
-						<Dropdown.Item icon={<InfoRound />} eventKey={6}>
+						<Dropdown.Item icon={<InfoRound />} eventKey={5}>
 							About
 						</Dropdown.Item>
 					</Dropdown.Menu>

@@ -33,7 +33,9 @@ export const fetchContent = (
 						created: iso2date(f['created']),
 						thumbnailFileId: f['thumbnail_file_id'],
 						thumbnailSource: `${SERVER}/thumbnail?id=${f['id']}&hash=${hash}&user_id=${user_id}`,
-						fileSource: `${SERVER}/file?id=${f['id']}&hash=${hash}&user_id=${user_id}`
+						fileSource: `${SERVER}/file?id=${f['id']}&hash=${hash}&user_id=${user_id}`,
+						sharedId: f['shared_id'],
+						isShared: f['is_shared']
 					} as FileType
 				})
 			}
@@ -210,7 +212,9 @@ export const addNewFile = (hash: string, user_id: number, id: number) => {
 						created: iso2date(response.data['created']),
 						thumbnailFileId: response.data['thumbnail_file_id'],
 						thumbnailSource: `${SERVER}/thumbnail?id=${response.data['id']}&hash=${hash}&user_id=${user_id}`,
-						fileSource: `${SERVER}/file?id=${response.data['id']}&hash=${hash}&user_id=${user_id}`
+						fileSource: `${SERVER}/file?id=${response.data['id']}&hash=${hash}&user_id=${user_id}`,
+						sharedId: response.data['shared_id'],
+						isShared: response.data['is_shared']
 					} as FileType
 				})
 				return response.data['name']
@@ -225,6 +229,74 @@ export const addNewFile = (hash: string, user_id: number, id: number) => {
 				dispatch({
 					type: ContentActionTypes.SET_ERROR,
 					payload: 'File was not uploaded'
+				})
+			})
+	}
+}
+
+export const shareFile = (hash: string, id: number, user_id: number) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get(`${SERVER}/share`, {
+				params: {
+					hash: hash,
+					id: id,
+					user_id: user_id
+				}
+			})
+			.then((response) => {
+				dispatch({
+					type: ContentActionTypes.CHANGE_SHARING_FILE,
+					payload: {
+						id: id,
+						isShared: true
+					}
+				})
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: 'File was successfully shared'
+				})
+			})
+			.catch((err) => {
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: err.response?.data
+				})
+			})
+	}
+}
+
+export const stopSharingFile = (hash: string, id: number, user_id: number) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get(`${SERVER}/stopSharing`, {
+				params: {
+					hash: hash,
+					id: id,
+					user_id: user_id
+				}
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.CHANGE_SHARING_FILE,
+					payload: {
+						id: id,
+						isShared: false
+					}
+				})
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: 'File was successfully stoped sharing'
+				})
+			})
+			.catch((err) => {
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: err.response?.data
 				})
 			})
 	}

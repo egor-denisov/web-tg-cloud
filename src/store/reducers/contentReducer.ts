@@ -68,6 +68,19 @@ export const ContentReducer = (
 					)
 				}
 			}
+		case ContentActionTypes.CHANGE_SHARING_FILE:
+			return {
+				...state,
+				content: {
+					...state.content,
+					files: state.content.files.map((f) => {
+						if (f.id === action.payload.id) {
+							f.isShared = action.payload.isShared
+						}
+						return f
+					})
+				}
+			}
 		case ContentActionTypes.ADD_NEW_FILE:
 			return {
 				...state,

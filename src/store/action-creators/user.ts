@@ -47,6 +47,7 @@ export const login = (
 					response.data['hash'],
 					response.data['current_directory']
 				)
+				//Number(localStorage.getItem('current_directory')) ?? response.data['current_directory']
 				f(dispatch)
 			})
 			.catch((e) => {
@@ -78,6 +79,7 @@ export const changeDirectory = (hash: string, id: number) => {
 					created: iso2date(d['created'])
 				} as DirectoryType
 			})
+			localStorage.setItem('current_directory', d['id'])
 		} catch (e) {
 			dispatch({
 				type: UserActionTypes.SET_ERROR,

@@ -6,7 +6,7 @@ import { Dropdown, Popover, Whisper } from 'rsuite'
 import { OverlayTriggerHandle } from 'rsuite/esm/Picker'
 import {
 	InfoRound,
-	Copy,
+	ShareOutline,
 	Edit,
 	Trash,
 	Detail,
@@ -19,6 +19,7 @@ type props = {
 	goAbout: Function
 	goRename: Function
 	goDelete: Function
+	goShare: Function
 }
 
 const File: FC<props> = ({
@@ -27,7 +28,8 @@ const File: FC<props> = ({
 	goSave,
 	goAbout,
 	goRename,
-	goDelete
+	goDelete,
+	goShare
 }) => {
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	const handleSelectMenu = (eventKey: string | undefined) => {
@@ -40,6 +42,9 @@ const File: FC<props> = ({
 				break
 			case 3:
 				goRename()
+				break
+			case 4:
+				goShare()
 				break
 			case 5:
 				goDelete()
@@ -68,8 +73,8 @@ const File: FC<props> = ({
 						<Dropdown.Item icon={<Edit />} eventKey={3}>
 							Rename
 						</Dropdown.Item>
-						<Dropdown.Item icon={<Copy />} eventKey={4}>
-							Copy
+						<Dropdown.Item icon={<ShareOutline />} eventKey={4}>
+							Share
 						</Dropdown.Item>
 						<Dropdown.Item icon={<Trash />} eventKey={5}>
 							Delete

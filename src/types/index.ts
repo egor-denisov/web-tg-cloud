@@ -9,6 +9,8 @@ export type FileType = {
 	thumbnailFileId: string
 	thumbnailSource: string
 	fileSource: string
+	sharedId: string
+	isShared: boolean
 }
 
 export type DirectoryType = {
