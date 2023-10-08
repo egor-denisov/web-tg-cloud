@@ -16,10 +16,10 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 	const [imageSrc, setImageSrc] = useState('')
 
 	useEffect(() => {
+		if (file.thumbnailFileId.length > 0) {
+			setImageSrc(file.thumbnailSource)
+		}
 		if (file.type.slice(0, 5) === 'image') {
-			if (file.thumbnailFileId.length > 0) {
-				setImageSrc(file.thumbnailSource)
-			}
 			const img = new Image()
 			img.onload = () => {
 				setImageSrc(file.fileSource)
@@ -40,7 +40,7 @@ const Previewer: FC<props> = memo(({ file, jumpTo, setVisible }) => {
 	return (
 		<div className="previewer" onClick={() => setVisible(false)}>
 			<div className="content" onClick={(e) => e.stopPropagation()}>
-				{file.type.slice(0, 5) === 'image' ? (
+				{file.thumbnailFileId.length > 0 ? (
 					<img src={imageSrc} alt="" />
 				) : (
 					<div className="card">

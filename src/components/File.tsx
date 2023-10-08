@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { FileType } from '../types'
 import FileText from '../svg/FileText'
 import { makeNameShorter } from '../utils/helper'
@@ -32,6 +32,12 @@ const File: FC<props> = ({
 	goShare
 }) => {
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
+	const onOpen = () => {
+		let event = new CustomEvent('openNewMenu', {
+			detail: 'file' + file.id
+		})
+		document.dispatchEvent(event)
+	}
 	const handleSelectMenu = (eventKey: string | undefined) => {
 		switch (Number(eventKey)) {
 			case 1:
@@ -55,11 +61,18 @@ const File: FC<props> = ({
 		}
 		ref.current?.close()
 	}
+	useEffect(() => {
+		document.addEventListener('openNewMenu', (e: any) => {
+			if (e?.detail !== 'file' + file.id) ref.current?.close()
+		})
+	}, [])
 	return (
 		<Whisper
 			placement="bottomStart"
 			trigger="contextMenu"
 			ref={ref}
+			onOpen={onOpen}
+			delayClose={0}
 			speaker={
 				<Popover full style={{ minWidth: '250px' }}>
 					<Dropdown.Menu onSelect={handleSelectMenu}>

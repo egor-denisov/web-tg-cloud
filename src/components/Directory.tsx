@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { DirectoryType } from '../types'
 import { makeNameShorter } from '../utils/helper'
 import FolderSVG from '../svg/Folder'
@@ -25,6 +25,12 @@ const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 	const { changeDirectory } = useActions()
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	const { data } = useTypedSelector((state) => state.user)
+	const onOpen = () => {
+		let event = new CustomEvent('openNewMenu', {
+			detail: 'directory' + directory.id
+		})
+		document.dispatchEvent(event)
+	}
 	const handleSelectMenu = (eventKey: string | undefined) => {
 		switch (Number(eventKey)) {
 			case 1:
@@ -42,13 +48,22 @@ const Directory: FC<props> = ({ directory, goAbout, goRename, goDelete }) => {
 		}
 		ref.current?.close()
 	}
+	useEffect(() => {
+		document.addEventListener('openNewMenu', (e: any) => {
+			if (e?.detail !== 'directory' + directory.id) ref.current?.close()
+		})
+	}, [])
 	return (
 		<Whisper
 			placement="bottomStart"
 			trigger="contextMenu"
 			disabled={directory.name === '../'}
-			onContextMenu={(e) => e.preventDefault()}
+			onContextMenu={(e) => {
+				e.preventDefault()
+			}}
+			onOpen={onOpen}
 			ref={ref}
+			delayClose={0}
 			speaker={
 				<Popover full style={{ minWidth: '250px' }}>
 					<Dropdown.Menu onSelect={handleSelectMenu}>

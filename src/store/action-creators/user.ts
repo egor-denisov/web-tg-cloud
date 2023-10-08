@@ -36,7 +36,9 @@ export const login = (
 						userId: response.data['user_id'],
 						firstname: response.data['firstname'],
 						lastname: response.data['lastname'],
-						currentDirectoryId: response.data['current_directory'],
+						currentDirectoryId:
+							localStorage.getItem('current_directory') ??
+							response.data['current_directory'],
 						hash: response.data['hash']
 					} as UserDataType
 				})
@@ -45,10 +47,16 @@ export const login = (
 			.then((response) => {
 				var f = changeDirectory(
 					response.data['hash'],
-					response.data['current_directory']
+					localStorage.getItem('current_directory') ??
+						response.data['current_directory']
 				)
-				//Number(localStorage.getItem('current_directory')) ?? response.data['current_directory']
-				f(dispatch)
+				f(dispatch).then(() => {
+					var f2 = changeDirectory(
+						response.data['hash'],
+						response.data['current_directory']
+					)
+					f2(dispatch)
+				})
 			})
 			.catch((e) => {
 				dispatch({
@@ -81,6 +89,10 @@ export const changeDirectory = (hash: string, id: number) => {
 			})
 			localStorage.setItem('current_directory', d['id'])
 		} catch (e) {
+			if (localStorage.getItem('current_directory') !== null) {
+				localStorage.removeItem('current_directory')
+				return Error('this directory does not exist')
+			}
 			dispatch({
 				type: UserActionTypes.SET_ERROR,
 				payload: String(e)
