@@ -50,7 +50,8 @@ export const login = (
 					localStorage.getItem('current_directory') ??
 						response.data['current_directory']
 				)
-				f(dispatch).then(() => {
+				f(dispatch).then((res) => {
+					if (res === undefined) return
 					var f2 = changeDirectory(
 						response.data['hash'],
 						response.data['current_directory']
@@ -98,5 +99,42 @@ export const changeDirectory = (hash: string, id: number) => {
 				payload: String(e)
 			})
 		}
+	}
+}
+
+export const userExit = () => {
+	return async (dispatch: Dispatch<UserAction>) => {
+		dispatch({
+			type: UserActionTypes.LOGOUT_USER
+		})
+		localStorage.removeItem('user_id')
+		localStorage.removeItem('last_name')
+		localStorage.removeItem('first_name')
+		localStorage.removeItem('username')
+	}
+}
+
+export const userReset = (hash: string, user_id: number) => {
+	return async (dispatch: Dispatch<UserAction>) => {
+		await axios
+			.get(`${SERVER}/reset`, {
+				params: {
+					hash: hash,
+					user_id: user_id
+				}
+			})
+			.then((response) => {
+				var f = changeDirectory(
+					hash,
+					response.data['current_directory']
+				)
+				f(dispatch)
+			})
+			.catch((e) => {
+				dispatch({
+					type: UserActionTypes.SET_ERROR,
+					payload: "Couldn't reset data. Something went wrong"
+				})
+			})
 	}
 }

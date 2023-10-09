@@ -12,6 +12,7 @@ import Items from '../components/Items'
 import DeleteModal from '../components/Modals/DeleteModal'
 import Auth from './Auth'
 import ShareModal from '../components/Modals/ShareModal'
+import UserMenu from '../components/UserMenu'
 
 type ItemType = FileType | DirectoryType
 
@@ -144,6 +145,7 @@ const Drive = () => {
 
 	return (
 		<div className="content">
+			<UserMenu />
 			<Path path={path} />
 			<Items
 				content={content}

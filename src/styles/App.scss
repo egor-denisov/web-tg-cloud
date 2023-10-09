@@ -18,6 +18,16 @@
 			font-size: 24px;
 		}
 	}
+	.user-menu-btn {
+		position: absolute;
+		right: 0px;
+		margin: 0px 15px;
+		cursor: pointer;
+		svg {
+			width: 36px;
+			height: 36px;
+		}
+	}
 	.items {
 		display: flex;
 		justify-content: flex-start;
@@ -160,4 +170,21 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+.user-menu {
+	min-width: 300px;
+	.info {
+		.name {
+			font-size: 18px;
+		}
+		.username {
+			font-size: 14px;
+			font-style: italic;
+			margin: 0px;
+		}
+	}
+	.exit-btn {
+		margin-top: 30px;
+		margin-left: 10px;
+	}
 }

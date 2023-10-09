@@ -7,7 +7,6 @@ import { Dropdown, Popover, Whisper } from 'rsuite'
 import { OverlayTriggerHandle } from 'rsuite/esm/Picker'
 import {
 	InfoRound,
-	Copy,
 	Edit,
 	Trash,
 	FolderFill,
