@@ -302,6 +302,44 @@ export const stopSharingFile = (hash: string, id: number, user_id: number) => {
 	}
 }
 
+export const getFileInTelegram = (
+	hash: string,
+	id: number,
+	user_id: number
+) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		await axios
+			.get(`${SERVER}/getInTelegram`, {
+				params: {
+					hash: hash,
+					id: id,
+					user_id: user_id
+				}
+			})
+			.then(() => {
+				dispatch({
+					type: ContentActionTypes.SET_NOTIFICATION,
+					payload: 'File was successfully sent'
+				})
+			})
+			.catch((err) => {
+				dispatch({
+					type: ContentActionTypes.SET_ERROR,
+					payload: err.response?.data
+				})
+			})
+	}
+}
+
+export const setError = (err: string) => {
+	return async (dispatch: Dispatch<ContentAction>) => {
+		dispatch({
+			type: ContentActionTypes.SET_ERROR,
+			payload: err
+		})
+	}
+}
+
 export const clearError = () => {
 	return async (dispatch: Dispatch<ContentAction>) => {
 		dispatch({

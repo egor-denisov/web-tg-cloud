@@ -13,7 +13,7 @@ const styles = {
 }
 const UploadDrawer: FC<props> = ({ show, onHide }) => {
 	const { data } = useTypedSelector((state) => state.user)
-	const { addNewFile } = useActions()
+	const { addNewFile, setError } = useActions()
 	return (
 		<div className="Drawer">
 			<Drawer open={show} onClose={onHide} size="md" placement="bottom">
@@ -31,6 +31,7 @@ const UploadDrawer: FC<props> = ({ show, onHide }) => {
 						onSuccess={(response) =>
 							addNewFile(data.hash, data.userId, response.id)
 						}
+						onError={(response) => setError(response.response)}
 						multiple
 						draggable
 					>

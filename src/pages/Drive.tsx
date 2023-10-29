@@ -13,6 +13,7 @@ import DeleteModal from '../components/Modals/DeleteModal'
 import Auth from './Auth'
 import ShareModal from '../components/Modals/ShareModal'
 import UserMenu from '../components/UserMenu'
+import GetModal from '../components/Modals/GetModal'
 
 type ItemType = FileType | DirectoryType
 
@@ -52,6 +53,11 @@ const Drive = () => {
 		id: -1,
 		name: '',
 		sharedId: ''
+	})
+	const [getModal, setGetModal] = useState({
+		visible: false,
+		id: -1,
+		name: ''
 	})
 	const { content, error, loading, notification } = useTypedSelector(
 		(state) => state.content
@@ -154,6 +160,7 @@ const Drive = () => {
 				setPreviewer={setPreviewer}
 				setDeleteModal={setDeleteModal}
 				setShareModal={setShareModal}
+				setGetModal={setGetModal}
 			/>
 			<AboutModal
 				show={aboutModal.visible}
@@ -181,6 +188,12 @@ const Drive = () => {
 				name={shareModal.name}
 				sharedId={shareModal.sharedId}
 				onHide={() => setShareModal({ ...shareModal, visible: false })}
+			/>
+			<GetModal
+				show={getModal.visible}
+				onHide={() => setGetModal({ ...getModal, visible: false })}
+				id={getModal.id}
+				name={getModal.name}
 			/>
 			{previewer.visible && (
 				<Previewer

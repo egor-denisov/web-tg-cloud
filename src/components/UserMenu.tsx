@@ -74,6 +74,14 @@ const UserMenu = () => {
 									Hello, {data.firstname} {data.lastname}
 								</p>
 								<p className="username">@{data.username}</p>
+								<div className="limits">
+									<p className="limit">
+										Uploading limit: 50Mb
+									</p>
+									<p className="limit">
+										Downloading limit: 20Mb
+									</p>
+								</div>
 							</div>
 							<Stack
 								justifyContent="flex-end"

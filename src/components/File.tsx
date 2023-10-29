@@ -10,7 +10,8 @@ import {
 	Edit,
 	Trash,
 	Detail,
-	FileDownload
+	FileDownload,
+	Send
 } from '@rsuite/icons/'
 type props = {
 	file: FileType
@@ -20,6 +21,7 @@ type props = {
 	goRename: Function
 	goDelete: Function
 	goShare: Function
+	goGet: Function
 }
 
 const File: FC<props> = ({
@@ -29,7 +31,8 @@ const File: FC<props> = ({
 	goAbout,
 	goRename,
 	goDelete,
-	goShare
+	goShare,
+	goGet
 }) => {
 	const ref = React.useRef<OverlayTriggerHandle | null>(null)
 	const onOpen = () => {
@@ -47,15 +50,18 @@ const File: FC<props> = ({
 				goSave()
 				break
 			case 3:
-				goRename()
+				goGet()
 				break
 			case 4:
-				goShare()
+				goRename()
 				break
 			case 5:
-				goDelete()
+				goShare()
 				break
 			case 6:
+				goDelete()
+				break
+			case 7:
 				goAbout()
 				break
 		}
@@ -79,21 +85,25 @@ const File: FC<props> = ({
 						<Dropdown.Item icon={<Detail />} eventKey={1}>
 							Open
 						</Dropdown.Item>
+						<hr style={{ margin: '0px' }} />
 						<Dropdown.Item icon={<FileDownload />} eventKey={2}>
 							Save
 						</Dropdown.Item>
+						<Dropdown.Item icon={<Send />} eventKey={3}>
+							Get in Telegram
+						</Dropdown.Item>
 						<hr style={{ margin: '0px' }} />
-						<Dropdown.Item icon={<Edit />} eventKey={3}>
+						<Dropdown.Item icon={<Edit />} eventKey={4}>
 							Rename
 						</Dropdown.Item>
-						<Dropdown.Item icon={<ShareOutline />} eventKey={4}>
+						<Dropdown.Item icon={<ShareOutline />} eventKey={5}>
 							Share
 						</Dropdown.Item>
-						<Dropdown.Item icon={<Trash />} eventKey={5}>
+						<Dropdown.Item icon={<Trash />} eventKey={6}>
 							Delete
 						</Dropdown.Item>
 						<hr style={{ margin: '0px' }} />
-						<Dropdown.Item icon={<InfoRound />} eventKey={6}>
+						<Dropdown.Item icon={<InfoRound />} eventKey={7}>
 							About
 						</Dropdown.Item>
 					</Dropdown.Menu>

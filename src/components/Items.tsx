@@ -9,6 +9,7 @@ type props = {
 	setPreviewer: Function
 	setDeleteModal: Function
 	setShareModal: Function
+	setGetModal: Function
 }
 const Items: FC<props> = ({
 	content,
@@ -16,7 +17,8 @@ const Items: FC<props> = ({
 	setEditModal,
 	setPreviewer,
 	setDeleteModal,
-	setShareModal
+	setShareModal,
+	setGetModal
 }) => {
 	return (
 		<div className="items">
@@ -81,6 +83,13 @@ const Items: FC<props> = ({
 								name: file.name,
 								sharedId: file.sharedId,
 								isShared: file.isShared
+							})
+						}
+						goGet={() =>
+							setGetModal({
+								visible: true,
+								id: file.id,
+								name: file.name
 							})
 						}
 					/>
